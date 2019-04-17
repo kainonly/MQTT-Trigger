@@ -1,5 +1,6 @@
 const env = require('dotenv').config().parsed;
 const mqtt = require('async-mqtt');
+const joi = require('joi');
 const koa = require('koa');
 const bodyparser = require('koa-bodyparser');
 const client = mqtt.connect(env.uri);
@@ -8,14 +9,24 @@ const app = new koa();
 app.use(bodyparser());
 app.use(async (ctx) => {
     const param = ctx.request.body;
-    if (ctx.method !== 'POST' ||
-        typeof param !== "object" ||
-        !param.hasOwnProperty('topic') ||
-        !param.hasOwnProperty('message') ||
-        !param.hasOwnProperty('options')) {
+    const validate = joi.validate({
+        topic: 'news',
+        message: 'sssd',
+        options: {}
+    }, joi.object({
+        topic: joi.string().required(),
+        message: joi.required(),
+        options: {
+            qos: joi.number(),
+            retain: joi.boolean(),
+            dup: joi.boolean()
+        }
+    }));
+
+    if (ctx.method !== 'POST' || validate.error !== null) {
         ctx.body = {
             error: 1,
-            msg: 'Request method or parameter is not standardized.'
+            msg: validate.error.details
         };
         return;
     }

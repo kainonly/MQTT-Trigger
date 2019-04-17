@@ -1,12 +1,14 @@
 {
   "name": "mqtt-trigger",
   "version": "1.0.0",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
     "async-mqtt": "^2.2.1",
     "dotenv": "^7.0.0",
+    "joi": "^14.3.1",
     "koa": "^2.7.0",
-    "koa-bodyparser": "^4.2.1",
-    "mqtt": "^2.18.8",
-    "validator": "^10.11.0"
+    "koa-bodyparser": "^4.2.1"
   }
 }
