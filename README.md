@@ -1,1 +1,3 @@
-# SCF-mqtt-trigger
+# MQTT-Trigger
+
+MQTT HTTP Proxy Trigger
