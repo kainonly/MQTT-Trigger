@@ -46,5 +46,5 @@ app.use(async (ctx) => {
 });
 
 client.on('connect', () => {
-    app.listen(3000);
+    app.listen(env.port);
 });
