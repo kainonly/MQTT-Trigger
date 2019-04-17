@@ -9,11 +9,7 @@ const app = new koa();
 app.use(bodyparser());
 app.use(async (ctx) => {
     const param = ctx.request.body;
-    const validate = joi.validate({
-        topic: 'news',
-        message: 'sssd',
-        options: {}
-    }, joi.object({
+    const validate = joi.validate(param, joi.object({
         topic: joi.string().required(),
         message: joi.required(),
         options: {
