@@ -2,11 +2,8 @@ const env = require('dotenv').config().parsed;
 const mqtt = require('async-mqtt');
 const koa = require('koa');
 const bodyparser = require('koa-bodyparser');
-const validator = require('validator');
 const client = mqtt.connect(env.uri);
 const app = new koa();
-
-console.log();
 
 app.use(bodyparser());
 app.use(async (ctx) => {
