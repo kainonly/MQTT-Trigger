@@ -1,5 +1,5 @@
 {
-  "name": "mqtt-trigger",
+  "name": "mqtt-api-trigger",
   "version": "1.0.0",
   "scripts": {
     "start": "node index.js"
