@@ -1,11 +1,11 @@
-# MQTT-Trigger
+# MQTT-Api-Trigger
 
-MQTT HTTP Proxy Trigger
+MQTT API Proxy Trigger
 
 #### Clone Project
 
 ```shell
-# git clone https://github.com/kainonly/mqtt-trigger
+# git clone https://github.com/kainonly/mqtt-api-trigger
 ```
 
 #### Set Env
