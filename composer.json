@@ -2,7 +2,6 @@
   "name": "kain/think-aliyun-extra",
   "description": "ThinkPHP 阿里云相关扩展",
   "require": {
-    "kain/think-bit": "^6.0.0",
     "aliyuncs/oss-sdk-php": "^2.3"
   },
   "autoload": {
