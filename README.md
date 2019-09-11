@@ -1,42 +1,44 @@
-# MQTT-Api-Trigger
+Think Aliyun Extra
+=======
 
-MQTT API Proxy Trigger
+ThinkPHP 阿里云相关扩展
 
-#### Clone Project
+![Packagist Version](https://img.shields.io/packagist/v/kain/think-aliyun-extra.svg?style=flat-square)
+![Packagist](https://img.shields.io/packagist/dt/kain/think-aliyun-extra.svg?color=blue&style=flat-square)
+![PHP from Packagist](https://img.shields.io/packagist/php-v/kain/think-aliyun-extra.svg?color=blue&style=flat-square)
+![Packagist](https://img.shields.io/packagist/l/kain/think-aliyun-extra.svg?color=blue&style=flat-square)
 
-```shell
-# git clone https://github.com/kainonly/mqtt-api-trigger
-```
-
-#### Set Env
-
-```ini
-uri = mqtt://test.mosquitto.org
-port = 3000
-```
-
-- `uri` MQTT connect url
-- `port` HTTP Listen Port
-
-#### Trigger
+#### 安装
 
 ```shell
-curl -X POST \
-  http://localhost:3000 \
-  -H 'Content-Type: application/json' \
-  -H 'cache-control: no-cache' \
-  -d '{
-	"topic":"erp.order.create",
-	"message":"L2-ccq123456",
-	"options":{}
-}'
-``` 
+composer require kain/think-aliyun-extra
+```
 
-Only post requests are supported, `body` like
+OSS 可以将上传文件直接上传至阿里云 OSS 对象存储中，不做本地的间接上传
 
-- `topic: string` topic name
-- `message: any` message
-- `options`
-  - `qos: number` qos
-  - `retain: boolean` retain
-  - `dup: boolean` dup
+#### put(string $name)
+
+上传至阿里云对象存储
+
+- **name** `string` File 请求文件
+- **Return** `string` 对象名称
+
+```php
+public function uploads()
+{
+    try {
+        $saveName = Oss::put('image');
+        return [
+            'error' => 0,
+            'data' => [
+                'savename' => $saveName,
+            ]
+        ];
+    } catch (\Exception $e) {
+        return [
+            'error' => 1,
+            'msg' => $e->getMessage()
+        ];
+    }
+}
+```

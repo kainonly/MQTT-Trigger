@@ -1,0 +1,31 @@
+{
+  "name": "kain/think-aliyun-extra",
+  "description": "ThinkPHP 阿里云相关扩展",
+  "require": {
+    "kain/think-bit": "^6.0.0",
+    "aliyuncs/oss-sdk-php": "^2.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "think\\aliyun\\extra\\": "src/"
+    }
+  },
+  "extra": {
+    "think": {
+      "services": [
+        "think\\aliyun\\extra\\service\\OssService"
+      ]
+    }
+  },
+  "authors": [
+    {
+      "name": "kain",
+      "email": "zhangtqx@vip.qq.com"
+    }
+  ],
+  "support": {
+    "docs": "https://think-bit.kain.net.cn",
+    "email": "zhangtqx@vip.qq.com"
+  },
+  "license": "MIT"
+}

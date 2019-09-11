@@ -1,4 +1,4 @@
 /.idea
-node_modules
-package-lock.json
-.env
+/vendor/
+/testing
+composer.lock
