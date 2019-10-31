@@ -6,8 +6,8 @@ namespace think\aliyun\extra\common;
 
 use OSS\Core\OssException;
 use OSS\OssClient;
-use think\bit\facade\Ext;
 use think\facade\Request;
+use think\support\facade\Utils;
 
 /**
  * 对象存储处理类
@@ -53,7 +53,7 @@ final class OssFactory
     {
         $file = Request::file($name);
         $fileName = date('Ymd') . '/' .
-            Ext::uuid()->toString() . '.' .
+            Utils::uuid()->toString() . '.' .
             $file->getOriginalExtension();
 
         $this->client->uploadFile(
