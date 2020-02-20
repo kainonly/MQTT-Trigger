@@ -7,7 +7,6 @@ use Exception;
 use OSS\OssClient;
 use OSS\Core\OssException;
 use think\facade\Request;
-use think\extra\contract\UtilsInterface;
 
 /**
  * 对象存储处理类
@@ -23,12 +22,6 @@ class OssFactory
     private $option;
 
     /**
-     * 工具
-     * @var UtilsInterface
-     */
-    private $utils;
-
-    /**
      * 对象存储客户端
      * @var OssClient
      */
@@ -40,10 +33,9 @@ class OssFactory
      * @param object $utils
      * @throws OssException
      */
-    public function __construct(array $option, UtilsInterface $utils)
+    public function __construct(array $option)
     {
         $this->option = $option;
-        $this->utils = $utils;
     }
 
     /**
@@ -83,7 +75,7 @@ class OssFactory
     {
         $file = Request::file($name);
         $fileName = date('Ymd') . '/' .
-            $this->utils->uuid()->toString() . '.' .
+            uuid()->toString() . '.' .
             $file->getOriginalExtension();
 
         $client = $this->setClient();
