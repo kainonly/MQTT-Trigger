@@ -8,7 +8,7 @@ use think\Service;
 
 class OssService extends Service
 {
-    public function register()
+    public function register(): void
     {
         $this->app->bind('oss', function () {
             $config = $this->app->config

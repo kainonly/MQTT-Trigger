@@ -2,7 +2,7 @@
   "name": "kain/think-aliyun-extra",
   "description": "ThinkPHP 阿里云相关扩展",
   "require": {
-    "php": ">=7.4.0",
+    "php": ">=7.4.*",
     "topthink/framework": "^6.0.0",
     "aliyuncs/oss-sdk-php": "^2.3"
   },

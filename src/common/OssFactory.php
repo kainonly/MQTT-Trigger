@@ -19,19 +19,17 @@ class OssFactory
      * 阿里云配置
      * @var array
      */
-    private $option;
+    private array $option;
 
     /**
      * 对象存储客户端
      * @var OssClient
      */
-    private $client;
+    private OssClient $client;
 
     /**
      * OssFactory constructor.
      * @param array $option
-     * @param object $utils
-     * @throws OssException
      */
     public function __construct(array $option)
     {
