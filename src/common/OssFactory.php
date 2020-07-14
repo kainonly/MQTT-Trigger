@@ -57,10 +57,11 @@ class OssFactory
     /**
      * 获取对象存储客户端
      * @return OssClient
+     * @throws OssException
      */
     public function getClient(): OssClient
     {
-        return $this->client;
+        return $this->setClient();
     }
 
     /**
