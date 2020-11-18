@@ -38,10 +38,11 @@ class OssFactory
 
     /**
      * 创建客户端
+     * @param bool $extranet 是否为外网
      * @return OssClient
      * @throws OssException
      */
-    private function setClient(): OssClient
+    private function setClient(bool $extranet): OssClient
     {
         if (!empty($this->client)) {
             return $this->client;
@@ -49,19 +50,20 @@ class OssFactory
         $this->client = new OssClient(
             $this->option['accessKeyId'],
             $this->option['accessKeySecret'],
-            $this->option['oss']['endpoint']
+            !$extranet ? $this->option['oss']['endpoint'] : $this->option['oss']['extranet']
         );
         return $this->client;
     }
 
     /**
      * 获取对象存储客户端
+     * @param bool $extranet
      * @return OssClient
      * @throws OssException
      */
-    public function getClient(): OssClient
+    public function getClient(bool $extranet = false): OssClient
     {
-        return $this->setClient();
+        return $this->setClient($extranet);
     }
 
     /**
@@ -77,7 +79,7 @@ class OssFactory
             uuid()->toString() . '.' .
             $file->getOriginalExtension();
 
-        $client = $this->setClient();
+        $client = $this->setClient(false);
         $client->uploadFile(
             $this->option['oss']['bucket'],
             $fileName,
