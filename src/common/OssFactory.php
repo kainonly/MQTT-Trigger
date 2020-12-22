@@ -3,6 +3,7 @@ declare (strict_types=1);
 
 namespace think\aliyun\extra\common;
 
+use Carbon\Carbon;
 use Exception;
 use OSS\OssClient;
 use OSS\Core\OssException;
@@ -87,5 +88,26 @@ class OssFactory
         );
 
         return $fileName;
+    }
+
+    /**
+     * 生成客户端上传OSS对象存储签名
+     * @param array $conditions 表单域的合法值
+     * @param int $expired 过期时间
+     * @return array
+     */
+    public function generatePostPresigned(array $conditions, int $expired = 600): array
+    {
+        $date = Carbon::now()->setTimezone('UTC');
+        $policy = base64_encode(json_encode([
+            'expiration' => $date->addSeconds($expired)->toISOString(),
+            'conditions' => $conditions
+        ]));
+        $signature = base64_encode(hash_hmac('sha1', $policy, $this->option['accessKeySecret'], true));
+        return [
+            'id' => $this->option['accessKeyId'],
+            'policy' => $policy,
+            'signature' => $signature
+        ];
     }
 }
