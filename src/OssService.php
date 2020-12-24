@@ -1,9 +1,8 @@
 <?php
 declare (strict_types=1);
 
-namespace think\aliyun\extra\service;
+namespace think\aliyun\extra;
 
-use think\aliyun\extra\common\OssFactory;
 use think\Service;
 
 class OssService extends Service

@@ -17,7 +17,7 @@
   "extra": {
     "think": {
       "services": [
-        "think\\aliyun\\extra\\service\\OssService"
+        "think\\aliyun\\extra\\OssService"
       ]
     }
   },

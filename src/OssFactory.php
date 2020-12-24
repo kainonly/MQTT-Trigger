@@ -1,7 +1,7 @@
 <?php
 declare (strict_types=1);
 
-namespace think\aliyun\extra\common;
+namespace think\aliyun\extra;
 
 use Carbon\Carbon;
 use Exception;
