@@ -95,6 +95,7 @@ class OssFactory
      * @param array $conditions 表单域的合法值
      * @param int $expired 过期时间
      * @return array
+     * @throws Exception
      */
     public function generatePostPresigned(array $conditions, int $expired = 600): array
     {
@@ -105,9 +106,13 @@ class OssFactory
         ]));
         $signature = base64_encode(hash_hmac('sha1', $policy, $this->option['accessKeySecret'], true));
         return [
-            'id' => $this->option['accessKeyId'],
-            'policy' => $policy,
-            'signature' => $signature
+            'filename' => date('Ymd') . '/' . uuid()->toString(),
+            'type' => 'oss',
+            'option' => [
+                'access_key_id' => $this->option['accessKeyId'],
+                'policy' => $policy,
+                'signature' => $signature
+            ],
         ];
     }
 }
