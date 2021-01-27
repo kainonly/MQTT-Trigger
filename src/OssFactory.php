@@ -9,11 +9,6 @@ use OSS\OssClient;
 use OSS\Core\OssException;
 use think\facade\Request;
 
-/**
- * 对象存储处理类
- * Class OssFactory
- * @package think\aliyun\extra\common
- */
 class OssFactory
 {
     /**
@@ -57,7 +52,7 @@ class OssFactory
     }
 
     /**
-     * 获取对象存储客户端
+     * 获取客户端
      * @param bool $extranet
      * @return OssClient
      * @throws OssException
@@ -68,7 +63,7 @@ class OssFactory
     }
 
     /**
-     * 上传至对象存储
+     * 上传对象
      * @param string $name 文件名称
      * @return string
      * @throws Exception
@@ -91,7 +86,21 @@ class OssFactory
     }
 
     /**
-     * 生成客户端上传OSS对象存储签名
+     * 删除对象
+     * @param array $keys 对象名
+     * @throws Exception
+     */
+    public function delete(array $keys): void
+    {
+        $client = $this->setClient(false);
+        $client->deleteObjects(
+            $this->option['oss']['bucket'],
+            $keys
+        );
+    }
+
+    /**
+     * 生成签名
      * @param array $conditions 表单域的合法值
      * @param int $expired 过期时间
      * @return array
@@ -100,13 +109,18 @@ class OssFactory
     public function generatePostPresigned(array $conditions, int $expired = 600): array
     {
         $date = Carbon::now()->setTimezone('UTC');
+        $filename = date('Ymd') . '/' . uuid()->toString();
         $policy = base64_encode(json_encode([
             'expiration' => $date->addSeconds($expired)->toISOString(),
-            'conditions' => $conditions
+            'conditions' => [
+                ['bucket' => $this->option['oss']['bucket']],
+                ['starts-with', '$key', $filename],
+                ...$conditions
+            ]
         ]));
         $signature = base64_encode(hash_hmac('sha1', $policy, $this->option['accessKeySecret'], true));
         return [
-            'filename' => date('Ymd') . '/' . uuid()->toString(),
+            'filename' => $filename,
             'type' => 'oss',
             'option' => [
                 'access_key_id' => $this->option['accessKeyId'],
