@@ -6,10 +6,9 @@ namespace think\aliyun\extra;
 use Carbon\Carbon;
 use Exception;
 use OSS\OssClient;
-use OSS\Core\OssException;
 use think\facade\Request;
 
-class OssFactory
+class OssFactory implements OssInterface
 {
     /**
      * 阿里云配置
@@ -36,7 +35,7 @@ class OssFactory
      * 创建客户端
      * @param bool $extranet 是否为外网
      * @return OssClient
-     * @throws OssException
+     * @throws Exception
      */
     private function setClient(bool $extranet): OssClient
     {
@@ -52,10 +51,10 @@ class OssFactory
     }
 
     /**
-     * 获取客户端
      * @param bool $extranet
      * @return OssClient
-     * @throws OssException
+     * @throws Exception
+     * @inheritDoc
      */
     public function getClient(bool $extranet = false): OssClient
     {
@@ -71,10 +70,7 @@ class OssFactory
     public function put(string $name): string
     {
         $file = Request::file($name);
-        $fileName = date('Ymd') . '/' .
-            uuid()->toString() . '.' .
-            $file->getOriginalExtension();
-
+        $fileName = date('Ymd') . '/' . uuid()->toString() . '.' . $file->getOriginalExtension();
         $client = $this->setClient(false);
         $client->uploadFile(
             $this->option['oss']['bucket'],
@@ -86,9 +82,9 @@ class OssFactory
     }
 
     /**
-     * 删除对象
-     * @param array $keys 对象名
+     * @param array $keys
      * @throws Exception
+     * @inheritDoc
      */
     public function delete(array $keys): void
     {
@@ -100,11 +96,11 @@ class OssFactory
     }
 
     /**
-     * 生成签名
-     * @param array $conditions 表单域的合法值
-     * @param int $expired 过期时间
+     * @param array $conditions
+     * @param int $expired
      * @return array
      * @throws Exception
+     * @inheritDoc
      */
     public function generatePostPresigned(array $conditions, int $expired = 600): array
     {

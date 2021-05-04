@@ -9,9 +9,8 @@ class OssService extends Service
 {
     public function register(): void
     {
-        $this->app->bind('oss', function () {
-            $config = $this->app->config
-                ->get('aliyun');
+        $this->app->bind(OssInterface::class, function () {
+            $config = $this->app->config->get('aliyun');
             return new OssFactory($config);
         });
     }
