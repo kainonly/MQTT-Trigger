@@ -7,7 +7,7 @@
     "aliyuncs/oss-sdk-php": "^2.3"
   },
   "require-dev": {
-    "roave/security-advisories": "dev-master"
+    "roave/security-advisories": "dev-latest"
   },
   "autoload": {
     "psr-4": {
